@@ -24,7 +24,16 @@ window.onload = () =>{
             else{
                 next = 'X'
             }
-            console.log(state)
+        })
+
+        //Change look of the square on hover
+        square.addEventListener("mouseover",()=>{
+            square.classList.add('hover')
+        })
+
+        //Restore the look of boths
+        square.addEventListener("mouseout",()=>{
+            square.classList.remove('hover')
         })
     }
 

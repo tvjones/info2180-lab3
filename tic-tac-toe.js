@@ -6,40 +6,40 @@ window.onload = () => {
   //Check for a winner
   const checkWinner = (state) => {
     //checking diagonal from top left
-    if (state[0] == state[4] && state[4] == state[8] && state[0] != '') {
+    if (state[0] == state[4] && state[4] == state[8] && state[0] != "") {
       return state[0];
     }
 
     //checking straight across the top row
-    else if (state[0] == state[1] && state[1] == state[2] && state[0] != '') {
+    else if (state[0] == state[1] && state[1] == state[2] && state[0] != "") {
       return state[0];
     }
 
     //checking straight across the middle row
-    else if (state[3] == state[4] && state[4] == state[5] && state[3] != '') {
+    else if (state[3] == state[4] && state[4] == state[5] && state[3] != "") {
       return state[3];
     }
 
     //checking straight across the bottom row
-    else if (state[6] == state[7] && state[7] == state[8] && state[6] != '') {
+    else if (state[6] == state[7] && state[7] == state[8] && state[6] != "") {
       return state[6];
     }
     //checking diagonal from top right
-    else if (state[2] == state[4] && state[4] == state[6] && state[2] != '') {
+    else if (state[2] == state[4] && state[4] == state[6] && state[2] != "") {
       return state[2];
     }
 
     //checking straight down the first column
-    else if (state[0] == state[3] && state[3] == state[6] && state[0] != '') {
+    else if (state[0] == state[3] && state[3] == state[6] && state[0] != "") {
       return state[0];
     }
 
     //checking straight down the second column
-    else if (state[1] == state[4] && state[4] == state[7] && state[1] != '') {
+    else if (state[1] == state[4] && state[4] == state[7] && state[1] != "") {
       return state[1];
     }
     //checking straight down the third column
-    else if (state[2] == state[5] && state[5] == state[8] && state[2] != '') {
+    else if (state[2] == state[5] && state[5] == state[8] && state[2] != "") {
       return state[2];
     }
     return false;
@@ -69,7 +69,7 @@ window.onload = () => {
       }
       //check for winner
       result = checkWinner(state);
-     
+
       if (result != false) {
         let status = document.getElementById("status");
         status.innerHTML = "Congratulations! " + result + " is the Winner!";
@@ -87,4 +87,28 @@ window.onload = () => {
       square.classList.remove("hover");
     });
   }
+
+  let newGame = document.querySelector("button.btn");
+
+  //reset game
+  newGame.addEventListener("click", () => {
+    //reset state of the game
+    for (let i = 0; i <9; i++){
+        state[i]=""
+    }
+    console.log(state)
+
+    for (const square of squares) {
+      //Remove X and O
+
+      square.innerHTML = "";
+      square.classList.remove("X");
+      square.classList.remove("O");
+
+      //Reset status message
+      let status = document.getElementById("status");
+      status.innerHTML = "Move your mouse over a square and click to play an X or an O."
+      status.classList.remove('you-won')
+    }
+  });
 };

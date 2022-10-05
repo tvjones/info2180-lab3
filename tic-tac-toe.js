@@ -48,32 +48,42 @@ window.onload = () => {
   //varibale of the next symbol to display
   let next = "X";
 
+  //variable to control the flow of the game
+  let play = true;
+
   //set class as square for each div in the game board
   for (const square of squares) {
     square.setAttribute("class", "square");
 
     //set X and O
     square.addEventListener("click", () => {
-      let result;
+      if (play) {
+        let result;
+        //update the state of the game
+        if (
+          !square.classList.contains("X") &&
+          !square.classList.contains("O")
+        ) {
+          state[Array.from(squares).indexOf(square)] = next;
+          square.innerHTML = next;
+          square.classList.add(next);
+          if (next == "O") {
+            next = "X";
+          } else {
+            next = "O";
+          }
 
-      square.innerHTML = next;
-      square.classList.add(next);
+          //check for winner
 
-      //update the state of the game
-      state[Array.from(squares).indexOf(square)] = next;
-
-      if (next == "X") {
-        next = "O";
-      } else {
-        next = "X";
-      }
-      //check for winner
-      result = checkWinner(state);
-
-      if (result != false) {
-        let status = document.getElementById("status");
-        status.innerHTML = "Congratulations! " + result + " is the Winner!";
-        status.classList.add("you-won");
+          result = checkWinner(state);
+         
+          if (result != false) {
+            play = false
+            let status = document.getElementById("status");
+            status.innerHTML = "Congratulations! " + result + " is the Winner!";
+            status.classList.add("you-won");
+          }
+        }
       }
     });
 
@@ -92,23 +102,27 @@ window.onload = () => {
 
   //reset game
   newGame.addEventListener("click", () => {
+    play=true
+    
+    next = 'X'
+
     //reset state of the game
-    for (let i = 0; i <9; i++){
-        state[i]=""
+    for (let i = 0; i < 9; i++) {
+      state[i] = "";
     }
-    console.log(state)
+ 
 
     for (const square of squares) {
       //Remove X and O
-
       square.innerHTML = "";
       square.classList.remove("X");
       square.classList.remove("O");
 
       //Reset status message
       let status = document.getElementById("status");
-      status.innerHTML = "Move your mouse over a square and click to play an X or an O."
-      status.classList.remove('you-won')
+      status.innerHTML =
+        "Move your mouse over a square and click to play an X or an O.";
+      status.classList.remove("you-won");
     }
   });
 };
